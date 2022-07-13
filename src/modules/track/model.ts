@@ -7,8 +7,8 @@ const trackSchema = new Schema(
     description: { type: String },
     eventId: { type: String },
     icon: { type: String },
-    from: { type: Object },
-    to: { type: Object },
+    from: { type: Date },
+    to: { type: Date },
   },
   { timestamps: true }
 );
