@@ -9,6 +9,8 @@ router.get("/", (_: any, res: any) => {
 require("./modules/hello/route")(router);
 require("./modules/auth/route")(router);
 require("./modules/track/route")(router);
+require("./modules/participant/route")(router);
+require("./modules/checkin/route")(router);
 require("./modules/event/route")(router);
 require("./modules/user/route")(router);
 require("./modules/user/invite/route")(router);
