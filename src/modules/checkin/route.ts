@@ -2,6 +2,7 @@ import { asyncHandler } from "../../handler";
 import { authorizeApi } from "../../middlewares";
 import {
   updateCheckin,
+  registerIn,
   getCheckin,
   deleteCheckin,
   getCheckinById,
@@ -14,6 +15,10 @@ module.exports = function (router: any) {
   router.get(
     "/checkin/:space/:eventId/:participantId",
     asyncHandler(getAvailableTracks)
+  );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/in",
+    asyncHandler(registerIn)
   );
   router.put("/checkin/:space", authorizeApi, asyncHandler(updateCheckin));
   router.get("/checkin/:space", authorizeApi, asyncHandler(getCheckin));

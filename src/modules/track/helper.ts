@@ -50,3 +50,17 @@ export const deleteTrack = async (space: string, id: string) => {
 
   return await model.remove({ _id: id });
 };
+
+export const getCurrentTracksByEvent = async (
+  space: string,
+  eventId: string
+) => {
+  const model = getCollection(space, trackCollection, trackSchema);
+  return await model.find({
+    $and: [
+      { eventId },
+      { from: { $lte: new Date() } },
+      { to: { $gte: new Date() } },
+    ],
+  });
+};

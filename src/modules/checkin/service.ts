@@ -18,6 +18,18 @@ export const getAvailableTracks = async (req: any, res: any) => {
   res.end();
 };
 
+export const registerIn = async (req: any, res: any) => {
+  const checkinList: any = await Helper.registerIn(
+    req.params.space,
+    req.params.eventId,
+    req.params.participantId,
+    req.params.trackId
+  );
+  res.status(200);
+  res.send(checkinList);
+  res.end();
+};
+
 export const updateCheckin = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const checkin: any = await Helper.updateCheckin(
