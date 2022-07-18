@@ -7,6 +7,7 @@ import {
   deleteCheckin,
   getCheckinById,
   getAvailableTracks,
+  registerOut,
 } from "./service";
 
 const selfRealm = 100;
@@ -19,6 +20,10 @@ module.exports = function (router: any) {
   router.post(
     "/checkin/:space/:eventId/:participantId/:trackId/in",
     asyncHandler(registerIn)
+  );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/out",
+    asyncHandler(registerOut)
   );
   router.put("/checkin/:space", authorizeApi, asyncHandler(updateCheckin));
   router.get("/checkin/:space", authorizeApi, asyncHandler(getCheckin));

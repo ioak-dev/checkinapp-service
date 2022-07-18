@@ -17,7 +17,21 @@ export const getAvailableTracks = async (
     checkinMap[item.participantId + "-" + item.trackId] = item;
   });
   console.log(checkinMap);
-  return await TrackHelper.getCurrentTracksByEvent(space, eventId);
+  const trackList = await TrackHelper.getCurrentTracksByEvent(space, eventId);
+  const response: any[] = [];
+  trackList.forEach((item: any) => {
+    const previousCheckin = checkinMap[participantId + "-" + item._id];
+    console.log(participantId + "-" + item._id);
+    console.log(previousCheckin);
+    const _item = { ...item._doc };
+    if (previousCheckin) {
+      _item.status = previousCheckin.to ? "closed" : "active";
+    } else {
+      _item.status = "new";
+    }
+    response.push(_item);
+  });
+  return response;
 };
 
 export const registerIn = async (
@@ -34,7 +48,7 @@ export const registerIn = async (
       existingRecord[0]._id,
       {
         ...existingRecord[0]._doc,
-        from: new Date(),
+        to: null,
       },
       { new: true, upsert: true }
     );
@@ -45,6 +59,29 @@ export const registerIn = async (
       trackId,
       from: new Date(),
     });
+  }
+
+  return response;
+};
+
+export const registerOut = async (
+  space: string,
+  eventId: string,
+  participantId: string,
+  trackId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+  const existingRecord = await model.find({ eventId, participantId, trackId });
+  let response = null;
+  if (existingRecord.length > 0) {
+    response = await model.findByIdAndUpdate(
+      existingRecord[0]._id,
+      {
+        ...existingRecord[0]._doc,
+        to: new Date(),
+      },
+      { new: true, upsert: true }
+    );
   }
 
   return response;
