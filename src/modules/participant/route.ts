@@ -16,11 +16,7 @@ module.exports = function (router: any) {
     asyncHandler(updateParticipant)
   );
   router.get("/participant/:space", authorizeApi, asyncHandler(getParticipant));
-  router.get(
-    "/participant/:space/:id",
-    authorizeApi,
-    asyncHandler(getParticipantById)
-  );
+  router.get("/participant/:space/:id", asyncHandler(getParticipantById));
   router.delete(
     "/participant/:space/:id",
     authorizeApi,

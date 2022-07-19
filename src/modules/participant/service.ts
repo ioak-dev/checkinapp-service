@@ -28,7 +28,7 @@ export const getParticipant = async (req: any, res: any) => {
 };
 
 export const getParticipantById = async (req: any, res: any) => {
-  const userId = req.user.user_id;
+  // const userId = req.user.user_id;
   const participantList: any = await Helper.getParticipantById(
     req.params.space,
     req.params.id

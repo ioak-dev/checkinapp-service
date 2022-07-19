@@ -16,22 +16,35 @@ export const getAvailableTracks = async (
   checkinList.forEach((item: any) => {
     checkinMap[item.participantId + "-" + item.trackId] = item;
   });
-  console.log(checkinMap);
   const trackList = await TrackHelper.getCurrentTracksByEvent(space, eventId);
   const response: any[] = [];
   trackList.forEach((item: any) => {
-    const previousCheckin = checkinMap[participantId + "-" + item._id];
-    console.log(participantId + "-" + item._id);
-    console.log(previousCheckin);
-    const _item = { ...item._doc };
-    if (previousCheckin) {
-      _item.status = previousCheckin.to ? "closed" : "active";
-    } else {
-      _item.status = "new";
-    }
-    response.push(_item);
+    response.push(
+      _enrichTrackForCheckinData(checkinMap, participantId, item._doc)
+    );
   });
   return response;
+};
+
+const _enrichTrackForCheckinData = (
+  checkinMap: any,
+  participantId: string,
+  track: any
+) => {
+  const _item = { ...track };
+
+  console.log(track.from, track.to, track.from <= new Date());
+
+  _item.isLocked = !(new Date() >= track.from && new Date() <= track.to);
+
+  const previousCheckin = checkinMap[participantId + "-" + track._id];
+  if (previousCheckin) {
+    _item.status = previousCheckin.to ? "closed" : "active";
+  } else {
+    _item.status = "new";
+  }
+
+  return _item;
 };
 
 export const registerIn = async (

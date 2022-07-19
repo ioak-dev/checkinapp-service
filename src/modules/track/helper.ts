@@ -56,11 +56,13 @@ export const getCurrentTracksByEvent = async (
   eventId: string
 ) => {
   const model = getCollection(space, trackCollection, trackSchema);
-  return await model.find({
-    $and: [
-      { eventId },
-      { from: { $lte: new Date() } },
-      { to: { $gte: new Date() } },
-    ],
-  });
+  return await model
+    .find({
+      $and: [
+        { eventId },
+        // { from: { $lte: new Date() } },
+        // { to: { $gte: new Date() } },
+      ],
+    })
+    .sort({ from: "asc" });
 };

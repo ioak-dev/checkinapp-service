@@ -28,7 +28,7 @@ export const getEvent = async (req: any, res: any) => {
 };
 
 export const getEventById = async (req: any, res: any) => {
-  const userId = req.user.user_id;
+  // const userId = req.user.user_id;
   const eventList: any = await Helper.getEventById(
     req.params.space,
     req.params.id
