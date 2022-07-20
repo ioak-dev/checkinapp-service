@@ -45,6 +45,19 @@ export const getParticipantById = async (space: string, id: string) => {
   return null;
 };
 
+export const getParticipantByReferenceId = async (
+  space: string,
+  referenceId: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+
+  const response = await model.find({ referenceId });
+  if (response.length > 0) {
+    return response[0];
+  }
+  return null;
+};
+
 export const deleteParticipant = async (space: string, id: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 

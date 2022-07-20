@@ -5,6 +5,7 @@ import {
   getParticipant,
   deleteParticipant,
   getParticipantById,
+  getParticipantByReferenceId,
 } from "./service";
 
 const selfRealm = 100;
@@ -17,6 +18,10 @@ module.exports = function (router: any) {
   );
   router.get("/participant/:space", authorizeApi, asyncHandler(getParticipant));
   router.get("/participant/:space/:id", asyncHandler(getParticipantById));
+  router.get(
+    "/participant/:space/reference/:referenceId",
+    asyncHandler(getParticipantByReferenceId)
+  );
   router.delete(
     "/participant/:space/:id",
     authorizeApi,
