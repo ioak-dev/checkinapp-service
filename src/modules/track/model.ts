@@ -10,6 +10,8 @@ const trackSchema = new Schema(
     from: { type: Date },
     to: { type: Date },
     code: { type: Number },
+    group: { type: String },
+    location: { type: String },
   },
   { timestamps: true }
 );
