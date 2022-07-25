@@ -9,6 +9,7 @@ const trackSchema = new Schema(
     icon: { type: String },
     from: { type: Date },
     to: { type: Date },
+    code: { type: Number },
   },
   { timestamps: true }
 );

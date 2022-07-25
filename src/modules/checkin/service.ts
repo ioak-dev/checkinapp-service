@@ -23,7 +23,8 @@ export const registerIn = async (req: any, res: any) => {
     req.params.space,
     req.params.eventId,
     req.params.participantId,
-    req.params.trackId
+    req.params.trackId,
+    req.query.code
   );
   res.status(200);
   res.send(checkinList);

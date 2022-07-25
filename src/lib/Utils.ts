@@ -18,8 +18,8 @@ export function isEmptyAttributes(object: Record<string, any>) {
 export function match(text: string, words: string) {
   let found = false;
   if (words) {
-    words.split(' ').forEach((word) => {
-      if (text.toString().match(new RegExp(`(\\w*${word}\\w*)`, 'gi'))) {
+    words.split(" ").forEach((word) => {
+      if (text.toString().match(new RegExp(`(\\w*${word}\\w*)`, "gi"))) {
         found = true;
       }
     });
@@ -53,5 +53,5 @@ export function sort(
 export function htmlToText(str?: string | null) {
   if (!str) return false;
   str = str.toString();
-  return str.replace(/(<([^>]+)>)/gi, '');
+  return str.replace(/(<([^>]+)>)/gi, "");
 }

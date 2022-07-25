@@ -4,6 +4,8 @@ import { checkinCollection, checkinSchema } from "./model";
 const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as TrackHelper from "../track/helper";
+import * as EventHelper from "../event/helper";
+import { isEmptyOrSpaces } from "../../lib/Utils";
 
 export const getAvailableTracks = async (
   space: string,
@@ -33,8 +35,6 @@ const _enrichTrackForCheckinData = (
 ) => {
   const _item = { ...track };
 
-  console.log(track.from, track.to, track.from <= new Date());
-
   _item.isLocked = !(new Date() >= track.from && new Date() <= track.to);
 
   const previousCheckin = checkinMap[participantId + "-" + track._id];
@@ -51,8 +51,21 @@ export const registerIn = async (
   space: string,
   eventId: string,
   participantId: string,
-  trackId: string
+  trackId: string,
+  code: string
 ) => {
+  const track = await TrackHelper.getTrackById(space, trackId);
+  if (track.code && track.code !== 0) {
+    if (parseInt(code) !== track.code) {
+      return { status: "FAILURE", errorCode: "INVALID_CODE" };
+    }
+  } else {
+    const event = await EventHelper.getEventById(space, eventId);
+    if (event.code && event.code !== 0 && parseInt(code) !== event.code) {
+      return { status: "FAILURE", errorCode: "INVALID_CODE" };
+    }
+  }
+
   const model = getCollection(space, checkinCollection, checkinSchema);
   const existingRecord = await model.find({ eventId, participantId, trackId });
   let response = null;
@@ -74,7 +87,7 @@ export const registerIn = async (
     });
   }
 
-  return response;
+  return { status: "SUCCESS", response };
 };
 
 export const registerOut = async (
