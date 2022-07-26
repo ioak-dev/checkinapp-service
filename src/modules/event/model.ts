@@ -5,6 +5,7 @@ const eventSchema = new Schema(
   {
     name: { type: String },
     description: { type: String },
+    notification: { type: String },
     code: { type: Number },
   },
   { timestamps: true }
