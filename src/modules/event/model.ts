@@ -7,6 +7,7 @@ const eventSchema = new Schema(
     description: { type: String },
     notification: { type: String },
     code: { type: Number },
+    media: { type: String },
   },
   { timestamps: true }
 );

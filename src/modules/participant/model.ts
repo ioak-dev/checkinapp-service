@@ -12,6 +12,7 @@ const participantSchema = new Schema(
     room: { type: String },
     groups: { type: Array },
     birthDate: { type: Date },
+    joiningDate: { type: Date },
   },
   { timestamps: true }
 );
