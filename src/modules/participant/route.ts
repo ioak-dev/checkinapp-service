@@ -6,7 +6,6 @@ import {
   deleteParticipant,
   getParticipantById,
   getParticipantByReferenceId,
-  ,
   getParticipantByGroup,
 } from "./service";
 
