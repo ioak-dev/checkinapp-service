@@ -9,6 +9,7 @@ const eventSchema = new Schema(
     code: { type: Number },
     media: { type: String },
     support: { type: String },
+    group: { type: String },
   },
   { timestamps: true }
 );
