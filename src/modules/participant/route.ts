@@ -6,6 +6,8 @@ import {
   deleteParticipant,
   getParticipantById,
   getParticipantByReferenceId,
+  ,
+  getParticipantByGroup,
 } from "./service";
 
 const selfRealm = 100;
@@ -21,6 +23,10 @@ module.exports = function (router: any) {
   router.get(
     "/participant/:space/reference/:referenceId",
     asyncHandler(getParticipantByReferenceId)
+  );
+  router.get(
+    "/participant/:space/group/:group",
+    asyncHandler(getParticipantByGroup)
   );
   router.delete(
     "/participant/:space/:id",

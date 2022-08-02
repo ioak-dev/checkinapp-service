@@ -49,6 +49,17 @@ export const getParticipantByReferenceId = async (req: any, res: any) => {
   res.end();
 };
 
+export const getParticipantByGroup = async (req: any, res: any) => {
+  // const userId = req.user.user_id;
+  const participantList: any = await Helper.getParticipantByGroup(
+    req.params.space,
+    req.params.group
+  );
+  res.status(200);
+  res.send(participantList);
+  res.end();
+};
+
 export const deleteParticipant = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const outcome: any = await Helper.deleteParticipant(

@@ -58,6 +58,12 @@ export const getParticipantByReferenceId = async (
   return null;
 };
 
+export const getParticipantByGroup = async (space: string, group: string) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+
+  return await model.find({ groups: group });
+};
+
 export const deleteParticipant = async (space: string, id: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
