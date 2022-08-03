@@ -5,6 +5,8 @@ const messageSchema = new Schema(
   {
     priority: { type: String },
     description: { type: String },
+    sender: { type: String },
+    userId: { type: String },
   },
   { timestamps: true }
 );
