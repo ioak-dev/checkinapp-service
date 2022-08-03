@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const messageSchema = new Schema(
   {
+    eventId: { type: String },
     priority: { type: String },
     description: { type: String },
     sender: { type: String },

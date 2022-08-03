@@ -5,6 +5,7 @@ import {
   getMessage,
   deleteMessage,
   getMessageById,
+  getMessageByEventId,
 } from "./service";
 
 const selfRealm = 100;
@@ -12,6 +13,11 @@ const selfRealm = 100;
 module.exports = function (router: any) {
   router.put("/message/:space", authorizeApi, asyncHandler(updateMessage));
   router.get("/message/:space", authorizeApi, asyncHandler(getMessage));
+  router.get(
+    "/message/:space/event/eventId",
+    authorizeApi,
+    asyncHandler(getMessageByEventId)
+  );
   router.get("/message/:space/:id", authorizeApi, asyncHandler(getMessageById));
   router.delete(
     "/message/:space/:id",

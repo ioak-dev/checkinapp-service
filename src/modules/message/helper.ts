@@ -35,6 +35,12 @@ export const getMessage = async (space: string) => {
   return await model.find();
 };
 
+export const getMessageByEventId = async (space: string, eventId: string) => {
+  const model = getCollection(space, messageCollection, messageSchema);
+
+  return await model.find({ eventId });
+};
+
 export const getMessageById = async (space: string, id: string) => {
   const model = getCollection(space, messageCollection, messageSchema);
 
