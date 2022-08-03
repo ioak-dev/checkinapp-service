@@ -10,6 +10,7 @@ const eventSchema = new Schema(
     media: { type: String },
     support: { type: String },
     group: { type: String },
+    home: { type: String },
   },
   { timestamps: true }
 );
