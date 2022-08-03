@@ -7,6 +7,7 @@ import {
   getParticipantById,
   getParticipantByReferenceId,
   getParticipantByGroup,
+  uploadParticipant,
 } from "./service";
 
 const selfRealm = 100;
@@ -17,6 +18,7 @@ module.exports = function (router: any) {
     authorizeApi,
     asyncHandler(updateParticipant)
   );
+  router.post("/participant/:space/upload", asyncHandler(uploadParticipant));
   router.get("/participant/:space", authorizeApi, asyncHandler(getParticipant));
   router.get("/participant/:space/:id", asyncHandler(getParticipantById));
   router.get(

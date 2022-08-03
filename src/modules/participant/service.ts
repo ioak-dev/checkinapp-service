@@ -19,6 +19,18 @@ export const updateParticipant = async (req: any, res: any) => {
   res.end();
 };
 
+export const uploadParticipant = async (req: any, res: any) => {
+  const userId = req.user.user_id;
+  const participant: any = await Helper.uploadParticipant(
+    req.params.space,
+    req.body,
+    userId
+  );
+  res.status(200);
+  res.send(participant);
+  res.end();
+};
+
 export const getParticipant = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const participantList: any = await Helper.getParticipant(req.params.space);

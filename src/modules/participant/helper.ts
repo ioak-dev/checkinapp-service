@@ -29,6 +29,28 @@ export const updateParticipant = async (
   return response;
 };
 
+export const uploadParticipant = async (
+  space: string,
+  data: any,
+  userId?: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+  let response = null;
+  console.log(data);
+  if (!data) {
+    return null;
+  }
+  response = await model.findByIdAndUpdate(
+    data._id,
+    {
+      ...data,
+    },
+    { new: true, upsert: true }
+  );
+
+  return response;
+};
+
 export const getParticipant = async (space: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
