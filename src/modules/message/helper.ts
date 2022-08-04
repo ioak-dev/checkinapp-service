@@ -8,7 +8,7 @@ import * as NoteHelper from "../note/helper";
 export const updateMessage = async (
   space: string,
   data: any,
-  userId?: string
+  admin: boolean
 ) => {
   const model = getCollection(space, messageCollection, messageSchema);
   let response = null;
@@ -17,12 +17,14 @@ export const updateMessage = async (
       data._id,
       {
         ...data,
+        admin,
       },
       { new: true, upsert: true }
     );
   } else {
     response = await model.create({
       ...data,
+      admin,
     });
   }
 

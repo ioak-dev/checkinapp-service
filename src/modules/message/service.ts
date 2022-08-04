@@ -8,11 +8,21 @@ import { getCollection } from "../../lib/dbutils";
 const selfRealm = 100;
 
 export const updateMessage = async (req: any, res: any) => {
-  const userId = req.user.user_id;
   const message: any = await Helper.updateMessage(
     req.params.space,
     req.body,
-    userId
+    false
+  );
+  res.status(200);
+  res.send(message);
+  res.end();
+};
+
+export const updateMessageAdmin = async (req: any, res: any) => {
+  const message: any = await Helper.updateMessage(
+    req.params.space,
+    req.body,
+    true
   );
   res.status(200);
   res.send(message);

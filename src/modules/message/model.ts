@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 const messageSchema = new Schema(
   {
     eventId: { type: String },
-    priority: { type: String },
+    important: { type: Boolean },
     description: { type: String },
     sender: { type: String },
     userId: { type: String },
+    admin: { type: Boolean },
   },
   { timestamps: true }
 );

@@ -29,19 +29,13 @@ export const updateParticipant = async (
   return response;
 };
 
-export const uploadParticipant = async (
-  space: string,
-  data: any,
-  userId?: string
-) => {
+const _updateParticipantByEmail = async (space: string, data: any) => {
   const model = getCollection(space, participantCollection, participantSchema);
   let response = null;
-  console.log(data);
-  if (!data) {
-    return null;
-  }
-  response = await model.findByIdAndUpdate(
-    data._id,
+  response = await model.findOneAndUpdate(
+    {
+      email: data.email,
+    },
     {
       ...data,
     },
@@ -49,6 +43,45 @@ export const uploadParticipant = async (
   );
 
   return response;
+};
+
+export const uploadParticipant = async (
+  space: string,
+  eventId: string,
+  data: any,
+  userId?: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+  if (!Array.isArray(data)) {
+    return null;
+  }
+
+  const responseList: any[] = [];
+  for (let i = 0; i < data.length; i++) {
+    const response = await _updateParticipantByEmail(space, {
+      ...data[i],
+      eventId,
+    });
+    responseList.push(response);
+  }
+
+  return responseList;
+};
+
+export const uploadParticipantGroup = async (
+  space: string,
+  eventId: string,
+  data: any,
+  userId?: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+  if (!Array.isArray(data)) {
+    return null;
+  }
+
+  const responseList: any[] = [];
+
+  return responseList;
 };
 
 export const getParticipant = async (space: string) => {

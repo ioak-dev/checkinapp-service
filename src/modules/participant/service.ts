@@ -23,6 +23,20 @@ export const uploadParticipant = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const participant: any = await Helper.uploadParticipant(
     req.params.space,
+    req.params.eventId,
+    req.body,
+    userId
+  );
+  res.status(200);
+  res.send(participant);
+  res.end();
+};
+
+export const uploadParticipantGroup = async (req: any, res: any) => {
+  const userId = req.user.user_id;
+  const participant: any = await Helper.uploadParticipantGroup(
+    req.params.space,
+    req.params.eventId,
     req.body,
     userId
   );
