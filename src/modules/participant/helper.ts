@@ -130,6 +130,15 @@ export const getParticipantByReferenceId = async (
   return null;
 };
 
+export const getParticipantByEventId = async (
+  space: string,
+  eventId: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+
+  return await model.find({ eventId });
+};
+
 export const getParticipantByGroup = async (space: string, group: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
@@ -140,4 +149,10 @@ export const deleteParticipant = async (space: string, id: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
   return await model.remove({ _id: id });
+};
+
+export const deleteAllParticipant = async (space: string, eventId: string) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+
+  return await model.remove({ eventId });
 };

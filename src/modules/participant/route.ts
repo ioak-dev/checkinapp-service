@@ -9,6 +9,8 @@ import {
   getParticipantByGroup,
   uploadParticipant,
   uploadParticipantGroup,
+  deleteAllParticipant,
+  getParticipantByEventId,
 } from "./service";
 
 const selfRealm = 100;
@@ -39,10 +41,19 @@ module.exports = function (router: any) {
     "/participant/:space/group/:group",
     asyncHandler(getParticipantByGroup)
   );
+  router.get(
+    "/participant/:space/event/:eventId",
+    asyncHandler(getParticipantByEventId)
+  );
   router.delete(
     "/participant/:space/:id",
     authorizeApi,
     asyncHandler(deleteParticipant)
+  );
+  router.delete(
+    "/participant/:space/event/:eventId",
+    authorizeApi,
+    asyncHandler(deleteAllParticipant)
   );
   // router.post("/auth/token", issueToken);
   // router.get("/auth/token/decode", authorizeApi, decodeToken);

@@ -29,6 +29,29 @@ export const updateTrack = async (
   return response;
 };
 
+export const uploadTrack = async (
+  space: string,
+  eventId: string,
+  data: any,
+  userId?: string
+) => {
+  const model = getCollection(space, trackCollection, trackSchema);
+  if (!Array.isArray(data)) {
+    return null;
+  }
+
+  const responseList: any[] = [];
+  for (let i = 0; i < data.length; i++) {
+    const response = await updateTrack(space, {
+      ...data[i],
+      eventId,
+    });
+    responseList.push(response);
+  }
+
+  return responseList;
+};
+
 export const getTrack = async (space: string) => {
   const model = getCollection(space, trackCollection, trackSchema);
 
@@ -49,6 +72,12 @@ export const deleteTrack = async (space: string, id: string) => {
   const model = getCollection(space, trackCollection, trackSchema);
 
   return await model.remove({ _id: id });
+};
+
+export const deleteAllTrack = async (space: string, eventId: string) => {
+  const model = getCollection(space, trackCollection, trackSchema);
+
+  return await model.remove({ eventId });
 };
 
 export const getCurrentTracksByEvent = async (

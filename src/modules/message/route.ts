@@ -21,7 +21,6 @@ module.exports = function (router: any) {
   router.get("/message/:space", authorizeApi, asyncHandler(getMessage));
   router.get(
     "/message/:space/event/:eventId",
-    authorizeApi,
     asyncHandler(getMessageByEventId)
   );
   router.get("/message/:space/:id", authorizeApi, asyncHandler(getMessageById));

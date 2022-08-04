@@ -38,7 +38,6 @@ export const getMessage = async (req: any, res: any) => {
 };
 
 export const getMessageByEventId = async (req: any, res: any) => {
-  const userId = req.user.user_id;
   const messageList: any = await Helper.getMessageByEventId(
     req.params.space,
     req.params.eventId

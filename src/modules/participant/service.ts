@@ -46,7 +46,6 @@ export const uploadParticipantGroup = async (req: any, res: any) => {
 };
 
 export const getParticipant = async (req: any, res: any) => {
-  const userId = req.user.user_id;
   const participantList: any = await Helper.getParticipant(req.params.space);
   res.status(200);
   res.send(participantList);
@@ -75,6 +74,17 @@ export const getParticipantByReferenceId = async (req: any, res: any) => {
   res.end();
 };
 
+export const getParticipantByEventId = async (req: any, res: any) => {
+  // const userId = req.user.user_id;
+  const participantList: any = await Helper.getParticipantByEventId(
+    req.params.space,
+    req.params.eventId
+  );
+  res.status(200);
+  res.send(participantList);
+  res.end();
+};
+
 export const getParticipantByGroup = async (req: any, res: any) => {
   // const userId = req.user.user_id;
   const participantList: any = await Helper.getParticipantByGroup(
@@ -91,6 +101,17 @@ export const deleteParticipant = async (req: any, res: any) => {
   const outcome: any = await Helper.deleteParticipant(
     req.params.space,
     req.params.id
+  );
+  res.status(200);
+  res.send(outcome);
+  res.end();
+};
+
+export const deleteAllParticipant = async (req: any, res: any) => {
+  const userId = req.user.user_id;
+  const outcome: any = await Helper.deleteParticipant(
+    req.params.space,
+    req.params.eventId
   );
   res.status(200);
   res.send(outcome);
