@@ -79,7 +79,24 @@ export const uploadParticipantGroup = async (
     return null;
   }
 
+  const _groupMap: any = {};
+  data.forEach((item: any) => {
+    if (_groupMap[item.email]) {
+      _groupMap[item.email] = [..._groupMap[item.email], item.group];
+    } else {
+      _groupMap[item.email] = [item.group];
+    }
+  });
+
   const responseList: any[] = [];
+  const _emailList = Object.keys(_groupMap);
+  for (let i = 0; i < _emailList.length; i++) {
+    const response = await _updateParticipantByEmail(space, {
+      email: _emailList[i],
+      groups: _groupMap[_emailList[i]],
+    });
+    responseList.push(response);
+  }
 
   return responseList;
 };
