@@ -47,7 +47,8 @@ export const getGroupmessage = async (space: string) => {
 
 export const getGroupmessageByEventId = async (
   space: string,
-  eventId: string
+  eventId: string,
+  group: string
 ) => {
   const model = getCollection(
     space,
@@ -55,7 +56,7 @@ export const getGroupmessageByEventId = async (
     groupmessageSchema
   );
 
-  return await model.find({ eventId });
+  return await model.find({ eventId, group });
 };
 
 export const getGroupmessageById = async (space: string, id: string) => {
@@ -80,24 +81,4 @@ export const deleteGroupmessage = async (space: string, id: string) => {
   );
 
   return await model.remove({ _id: id });
-};
-
-export const getCurrentGroupmessagesByEvent = async (
-  space: string,
-  eventId: string
-) => {
-  const model = getCollection(
-    space,
-    groupmessageCollection,
-    groupmessageSchema
-  );
-  return await model
-    .find({
-      $and: [
-        { eventId },
-        // { from: { $lte: new Date() } },
-        // { to: { $gte: new Date() } },
-      ],
-    })
-    .sort({ from: "asc" });
 };

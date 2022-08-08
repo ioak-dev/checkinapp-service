@@ -24,7 +24,7 @@ module.exports = function (router: any) {
     asyncHandler(getGroupmessage)
   );
   router.get(
-    "/groupmessage/:space/event/:eventId",
+    "/groupmessage/:space/event/:eventId/group/:group",
     asyncHandler(getGroupmessageByEventId)
   );
   router.get(

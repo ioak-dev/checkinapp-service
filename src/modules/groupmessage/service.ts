@@ -40,7 +40,8 @@ export const getGroupmessage = async (req: any, res: any) => {
 export const getGroupmessageByEventId = async (req: any, res: any) => {
   const groupmessageList: any = await Helper.getGroupmessageByEventId(
     req.params.space,
-    req.params.eventId
+    req.params.eventId,
+    req.params.group
   );
   res.status(200);
   res.send(groupmessageList);

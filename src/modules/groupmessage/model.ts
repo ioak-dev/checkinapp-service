@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const groupmessageSchema = new Schema(
   {
+    group: { type: String },
     eventId: { type: String },
     important: { type: Boolean },
     description: { type: String },
