@@ -29,6 +29,21 @@ export const updateParticipant = async (
   return response;
 };
 
+export const updateParticipantRoom = async (
+  space: string,
+  participantId: string,
+  room: string
+) => {
+  const model = getCollection(space, participantCollection, participantSchema);
+  return await model.findByIdAndUpdate(
+    participantId,
+    {
+      room,
+    },
+    { new: true, upsert: true }
+  );
+};
+
 const _updateParticipantByEmail = async (space: string, data: any) => {
   const model = getCollection(space, participantCollection, participantSchema);
   let response = null;

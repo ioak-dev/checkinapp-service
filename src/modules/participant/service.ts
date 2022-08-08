@@ -19,6 +19,17 @@ export const updateParticipant = async (req: any, res: any) => {
   res.end();
 };
 
+export const updateParticipantRoom = async (req: any, res: any) => {
+  const participant: any = await Helper.updateParticipantRoom(
+    req.params.space,
+    req.params.participantId,
+    req.params.room
+  );
+  res.status(200);
+  res.send(participant);
+  res.end();
+};
+
 export const uploadParticipant = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const participant: any = await Helper.uploadParticipant(
