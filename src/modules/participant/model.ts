@@ -13,6 +13,17 @@ const participantSchema = new Schema(
     groups: { type: Array },
     birthDate: { type: Date },
     joiningDate: { type: Date },
+    practice: { type: String },
+    food: { type: String },
+    drink: { type: String },
+    sports: { type: String },
+    travelMode: { type: String },
+    flightNoIn: { type: String },
+    startBaseIn: { type: Date },
+    landBaseIn: { type: Date },
+    flightNoOut: { type: String },
+    startBaseOut: { type: Date },
+    landBaseOut: { type: Date },
   },
   { timestamps: true }
 );

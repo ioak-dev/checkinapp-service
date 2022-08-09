@@ -4,6 +4,7 @@ import { trackCollection, trackSchema } from "./model";
 const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
+import { parse } from "date-fns";
 
 export const updateTrack = async (
   space: string,
@@ -44,6 +45,8 @@ export const uploadTrack = async (
   for (let i = 0; i < data.length; i++) {
     const response = await updateTrack(space, {
       ...data[i],
+      from: parse(data[i].from, "yyyyMMddHHmm", new Date()),
+      to: parse(data[i].to, "yyyyMMddHHmm", new Date()),
       eventId,
     });
     responseList.push(response);

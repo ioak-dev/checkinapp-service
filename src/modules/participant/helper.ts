@@ -4,6 +4,7 @@ import { participantCollection, participantSchema } from "./model";
 const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
+import { parse } from "date-fns";
 
 export const updateParticipant = async (
   space: string,
@@ -75,6 +76,12 @@ export const uploadParticipant = async (
   for (let i = 0; i < data.length; i++) {
     const response = await _updateParticipantByEmail(space, {
       ...data[i],
+      birthDate: parse(data[i].birthDate, "yyyyMMdd", new Date()),
+      joiningDate: parse(data[i].joiningDate, "yyyyMMdd", new Date()),
+      startBaseIn: parse(data[i].startBaseIn, "yyyyMMddHHmm", new Date()),
+      landBaseIn: parse(data[i].landBaseIn, "yyyyMMddHHmm", new Date()),
+      startBaseOut: parse(data[i].startBaseOut, "yyyyMMddHHmm", new Date()),
+      landBaseOut: parse(data[i].landBaseOut, "yyyyMMddHHmm", new Date()),
       eventId,
     });
     responseList.push(response);
