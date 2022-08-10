@@ -36,7 +36,7 @@ module.exports = function (router: any) {
     authorizeApi,
     asyncHandler(uploadParticipantGroup)
   );
-  router.get("/participant/:space", authorizeApi, asyncHandler(getParticipant));
+  router.get("/participant/:space", asyncHandler(getParticipant));
   router.get("/participant/:space/:id", asyncHandler(getParticipantById));
   router.get(
     "/participant/:space/reference/:referenceId",
