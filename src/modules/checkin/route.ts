@@ -27,6 +27,10 @@ module.exports = function (router: any) {
   );
   router.put("/checkin/:space", authorizeApi, asyncHandler(updateCheckin));
   router.get("/checkin/:space", authorizeApi, asyncHandler(getCheckin));
+  router.get(
+    "/checkin/:space/:eventId/:participantId",
+    asyncHandler(getCheckin)
+  );
   router.get("/checkin/:space/:id", authorizeApi, asyncHandler(getCheckinById));
   router.delete(
     "/checkin/:space/:id",

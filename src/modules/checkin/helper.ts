@@ -143,6 +143,16 @@ export const getCheckin = async (space: string) => {
   return await model.find();
 };
 
+export const getCheckinByParticipantId = async (
+  space: string,
+  eventId: string,
+  participantId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+
+  return await model.find({ eventId, participantId });
+};
+
 export const getCheckinById = async (space: string, id: string) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
 

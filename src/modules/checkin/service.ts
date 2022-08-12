@@ -63,6 +63,17 @@ export const getCheckin = async (req: any, res: any) => {
   res.end();
 };
 
+export const getCheckinByParticipantId = async (req: any, res: any) => {
+  const checkinList: any = await Helper.getCheckinByParticipantId(
+    req.params.space,
+    req.params.eventId,
+    req.params.participantId
+  );
+  res.status(200);
+  res.send(checkinList);
+  res.end();
+};
+
 export const getCheckinById = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const checkinList: any = await Helper.getCheckinById(
