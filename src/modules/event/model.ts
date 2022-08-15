@@ -11,6 +11,7 @@ const eventSchema = new Schema(
     support: { type: String },
     group: { type: String },
     home: { type: String },
+    adminKey: { type: String },
   },
   { timestamps: true }
 );

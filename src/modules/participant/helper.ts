@@ -76,12 +76,24 @@ export const uploadParticipant = async (
   for (let i = 0; i < data.length; i++) {
     const response = await _updateParticipantByEmail(space, {
       ...data[i],
-      birthDate: parse(data[i].birthDate, "yyyyMMdd", new Date()),
-      joiningDate: parse(data[i].joiningDate, "yyyyMMdd", new Date()),
-      startBaseIn: parse(data[i].startBaseIn, "yyyyMMddHHmm", new Date()),
-      landBaseIn: parse(data[i].landBaseIn, "yyyyMMddHHmm", new Date()),
-      startBaseOut: parse(data[i].startBaseOut, "yyyyMMddHHmm", new Date()),
-      landBaseOut: parse(data[i].landBaseOut, "yyyyMMddHHmm", new Date()),
+      birthDate: data[i].birthDate
+        ? parse(data[i].birthDate, "yyyyMMdd", new Date())
+        : null,
+      joiningDate: data[i].joiningDate
+        ? parse(data[i].joiningDate, "yyyyMMdd", new Date())
+        : null,
+      startBaseIn: data[i].startBaseIn
+        ? parse(data[i].startBaseIn, "yyyyMMddHHmm", new Date())
+        : null,
+      landBaseIn: data[i].landBaseIn
+        ? parse(data[i].landBaseIn, "yyyyMMddHHmm", new Date())
+        : null,
+      startBaseOut: data[i].startBaseOut
+        ? parse(data[i].startBaseOut, "yyyyMMddHHmm", new Date())
+        : null,
+      landBaseOut: data[i].landBaseOut
+        ? parse(data[i].landBaseOut, "yyyyMMddHHmm", new Date())
+        : null,
       eventId,
     });
     responseList.push(response);
