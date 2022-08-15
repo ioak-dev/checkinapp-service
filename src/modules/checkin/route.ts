@@ -8,6 +8,10 @@ import {
   getCheckinById,
   getAvailableTracks,
   registerOut,
+  registerOutAdmin
+  registerInAdmin,
+  getCheckinByEvent,
+  getCheckinByEventAndTrack,
 } from "./service";
 
 const selfRealm = 100;
@@ -25,18 +29,27 @@ module.exports = function (router: any) {
     "/checkin/:space/:eventId/:participantId/:trackId/out",
     asyncHandler(registerOut)
   );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/in/admin",
+    asyncHandler(registerInAdmin)
+  );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/out/admin",
+    asyncHandler(registerOutAdmin)
+  );
   router.put("/checkin/:space", authorizeApi, asyncHandler(updateCheckin));
   router.get("/checkin/:space", authorizeApi, asyncHandler(getCheckin));
   router.get(
     "/checkin/:space/:eventId/:participantId",
     asyncHandler(getCheckin)
   );
-  router.get("/checkin/:space/:id", authorizeApi, asyncHandler(getCheckinById));
-  router.delete(
-    "/checkin/:space/:id",
-    authorizeApi,
-    asyncHandler(deleteCheckin)
+  router.get("/checkin/:space/event/:eventId", asyncHandler(getCheckinByEvent));
+  router.get(
+    "/checkin/:space/event/:eventId/track/:trackId",
+    asyncHandler(getCheckinByEventAndTrack)
   );
+  router.get("/checkin/:space/:id", authorizeApi, asyncHandler(getCheckinById));
+  router.delete("/checkin/:space/:id", asyncHandler(deleteCheckin));
   // router.post("/auth/token", issueToken);
   // router.get("/auth/token/decode", authorizeApi, decodeToken);
   // router.post("/auth/logout", logout);

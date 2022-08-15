@@ -7,6 +7,7 @@ import {
   getTrackById,
   uploadTrack,
   deleteAllTrack,
+  getTrackByEventId,
 } from "./service";
 
 const selfRealm = 100;
@@ -19,7 +20,8 @@ module.exports = function (router: any) {
   );
   router.put("/track/:space", authorizeApi, asyncHandler(updateTrack));
   router.get("/track/:space", authorizeApi, asyncHandler(getTrack));
-  router.get("/track/:space/:id", authorizeApi, asyncHandler(getTrackById));
+  router.get("/track/:space/:id", asyncHandler(getTrackById));
+  router.get("/track/:space/event/:eventId", asyncHandler(getTrackByEventId));
   router.delete("/track/:space/:id", authorizeApi, asyncHandler(deleteTrack));
   router.delete(
     "/track/:space/event/:eventId",

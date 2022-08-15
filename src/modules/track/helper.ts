@@ -61,6 +61,12 @@ export const getTrack = async (space: string) => {
   return await model.find();
 };
 
+export const getTrackByEventId = async (space: string, eventId: string) => {
+  const model = getCollection(space, trackCollection, trackSchema);
+
+  return await model.find({ eventId });
+};
+
 export const getTrackById = async (space: string, id: string) => {
   const model = getCollection(space, trackCollection, trackSchema);
 

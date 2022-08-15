@@ -52,17 +52,20 @@ export const registerIn = async (
   eventId: string,
   participantId: string,
   trackId: string,
-  code: string
+  code: string,
+  admin?: boolean
 ) => {
-  const track = await TrackHelper.getTrackById(space, trackId);
-  if (track.code && track.code !== 0) {
-    if (parseInt(code) !== track.code) {
-      return { status: "FAILURE", errorCode: "INVALID_CODE" };
-    }
-  } else {
-    const event = await EventHelper.getEventById(space, eventId);
-    if (event.code && event.code !== 0 && parseInt(code) !== event.code) {
-      return { status: "FAILURE", errorCode: "INVALID_CODE" };
+  if (!admin) {
+    const track = await TrackHelper.getTrackById(space, trackId);
+    if (track.code && track.code !== 0) {
+      if (parseInt(code) !== track.code) {
+        return { status: "FAILURE", errorCode: "INVALID_CODE" };
+      }
+    } else {
+      const event = await EventHelper.getEventById(space, eventId);
+      if (event.code && event.code !== 0 && parseInt(code) !== event.code) {
+        return { status: "FAILURE", errorCode: "INVALID_CODE" };
+      }
     }
   }
 
@@ -94,7 +97,8 @@ export const registerOut = async (
   space: string,
   eventId: string,
   participantId: string,
-  trackId: string
+  trackId: string,
+  admin?: boolean
 ) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
   const existingRecord = await model.find({ eventId, participantId, trackId });
@@ -141,6 +145,16 @@ export const getCheckin = async (space: string) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
 
   return await model.find();
+};
+
+export const getCheckinByEventAndTrack = async (
+  space: string,
+  eventId: string,
+  trackId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+
+  return await model.find({ eventId, trackId });
 };
 
 export const getCheckinByParticipantId = async (

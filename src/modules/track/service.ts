@@ -41,10 +41,19 @@ export const getTrack = async (req: any, res: any) => {
 };
 
 export const getTrackById = async (req: any, res: any) => {
-  const userId = req.user.user_id;
   const trackList: any = await Helper.getTrackById(
     req.params.space,
     req.params.id
+  );
+  res.status(200);
+  res.send(trackList);
+  res.end();
+};
+
+export const getTrackByEventId = async (req: any, res: any) => {
+  const trackList: any = await Helper.getTrackByEventId(
+    req.params.space,
+    req.params.eventId
   );
   res.status(200);
   res.send(trackList);

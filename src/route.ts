@@ -14,6 +14,7 @@ require("./modules/checkin/route")(router);
 require("./modules/message/route")(router);
 require("./modules/groupmessage/route")(router);
 require("./modules/event/route")(router);
+require("./modules/backup/route")(router);
 require("./modules/user/route")(router);
 require("./modules/user/invite/route")(router);
 require("./modules/company/route")(router);
