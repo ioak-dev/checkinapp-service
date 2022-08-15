@@ -8,7 +8,7 @@ import {
   getCheckinById,
   getAvailableTracks,
   registerOut,
-  registerOutAdmin
+  registerOutAdmin,
   registerInAdmin,
   getCheckinByEvent,
   getCheckinByEventAndTrack,
