@@ -55,7 +55,7 @@ export const registerIn = async (
   code: string,
   admin?: boolean
 ) => {
-  if (!admin) {
+  if (!admin && trackId !== "NA") {
     const track = await TrackHelper.getTrackById(space, trackId);
     if (track.code && track.code !== 0) {
       if (parseInt(code) !== track.code) {
@@ -70,22 +70,28 @@ export const registerIn = async (
   }
 
   const model = getCollection(space, checkinCollection, checkinSchema);
-  const existingRecord = await model.find({ eventId, participantId, trackId });
+  const existingRecord = await model.find({
+    eventId,
+    participantId,
+    trackId: trackId === "NA" ? null : trackId,
+  });
   let response = null;
   if (existingRecord.length > 0) {
-    response = await model.findByIdAndUpdate(
-      existingRecord[0]._id,
-      {
-        ...existingRecord[0]._doc,
-        to: null,
-      },
-      { new: true, upsert: true }
-    );
+    if (trackId !== "NA") {
+      response = await model.findByIdAndUpdate(
+        existingRecord[0]._id,
+        {
+          ...existingRecord[0]._doc,
+          to: null,
+        },
+        { new: true, upsert: true }
+      );
+    }
   } else {
     response = await model.create({
       eventId,
       participantId,
-      trackId,
+      trackId: trackId === "NA" ? null : trackId,
       from: new Date(),
     });
   }
