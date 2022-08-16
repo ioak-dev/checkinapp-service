@@ -12,11 +12,7 @@ import {
 const selfRealm = 100;
 
 module.exports = function (router: any) {
-  router.put(
-    "/message/:space/admin",
-    authorizeApi,
-    asyncHandler(updateMessageAdmin)
-  );
+  router.put("/message/:space/admin", asyncHandler(updateMessageAdmin));
   router.put("/message/:space", asyncHandler(updateMessage));
   router.get("/message/:space", authorizeApi, asyncHandler(getMessage));
   router.get(
