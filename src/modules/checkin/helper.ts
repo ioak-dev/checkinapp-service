@@ -107,7 +107,11 @@ export const registerOut = async (
   admin?: boolean
 ) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
-  const existingRecord = await model.find({ eventId, participantId, trackId });
+  const existingRecord = await model.find({
+    eventId,
+    participantId,
+    trackId: trackId === "NA" ? null : trackId,
+  });
   let response = null;
   if (existingRecord.length > 0) {
     response = await model.findByIdAndUpdate(
@@ -160,7 +164,10 @@ export const getCheckinByEventAndTrack = async (
 ) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
 
-  return await model.find({ eventId, trackId });
+  return await model.find({
+    eventId,
+    trackId: trackId === "NA" ? null : trackId,
+  });
 };
 
 export const getCheckinByParticipantId = async (
