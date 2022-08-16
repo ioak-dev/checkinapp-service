@@ -24,6 +24,7 @@ const participantSchema = new Schema(
     flightNoOut: { type: String },
     startBaseOut: { type: Date },
     landBaseOut: { type: Date },
+    distanceTravelled: { type: Number },
   },
   { timestamps: true }
 );
