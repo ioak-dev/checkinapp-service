@@ -1,11 +1,21 @@
 import { asyncHandler } from "../../handler";
 import { authorizeApi } from "../../middlewares";
-import { updateEvent, getEvent, deleteEvent, getEventById } from "./service";
+import {
+  updateEvent,
+  getEvent,
+  deleteEvent,
+  getEventById,
+  updateEventNotification,
+} from "./service";
 
 const selfRealm = 100;
 
 module.exports = function (router: any) {
   router.put("/event/:space", authorizeApi, asyncHandler(updateEvent));
+  router.post(
+    "/event/:space/:id/notification",
+    asyncHandler(updateEventNotification)
+  );
   router.get("/event/:space", authorizeApi, asyncHandler(getEvent));
   router.get("/event/:space/:id", asyncHandler(getEventById));
   router.delete("/event/:space/:id", authorizeApi, asyncHandler(deleteEvent));

@@ -19,6 +19,17 @@ export const updateEvent = async (req: any, res: any) => {
   res.end();
 };
 
+export const updateEventNotification = async (req: any, res: any) => {
+  const event: any = await Helper.updateEventNotification(
+    req.params.space,
+    req.params.id,
+    req.body
+  );
+  res.status(200);
+  res.send(event);
+  res.end();
+};
+
 export const getEvent = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const eventList: any = await Helper.getEvent(req.params.space);

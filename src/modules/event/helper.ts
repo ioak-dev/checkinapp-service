@@ -29,6 +29,21 @@ export const updateEvent = async (
   return response;
 };
 
+export const updateEventNotification = async (
+  space: string,
+  id: string,
+  data: any
+) => {
+  const model = getCollection(space, eventCollection, eventSchema);
+  return await model.findByIdAndUpdate(
+    id,
+    {
+      notification: data?.message || null,
+    },
+    { upsert: true }
+  );
+};
+
 export const getEvent = async (space: string) => {
   const model = getCollection(space, eventCollection, eventSchema);
 
