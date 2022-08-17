@@ -176,7 +176,7 @@ export const getParticipantByEventId = async (
 export const getParticipantByGroup = async (space: string, group: string) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
-  return await model.find({ groups: group });
+  return await model.find({ groups: group }).sort({ firstName: "asc" });
 };
 
 export const deleteParticipant = async (space: string, id: string) => {
