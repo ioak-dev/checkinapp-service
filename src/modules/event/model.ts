@@ -12,6 +12,7 @@ const eventSchema = new Schema(
     group: { type: String },
     home: { type: String },
     adminKey: { type: String },
+    customFields: { type: Object },
   },
   { timestamps: true }
 );
