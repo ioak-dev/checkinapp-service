@@ -63,7 +63,7 @@ const _updateParticipantByEmail = async (space: string, data: any) => {
 
 export const uploadParticipant = async (
   space: string,
-  eventId: string,
+  _eventId: string,
   data: any,
   userId?: string
 ) => {
@@ -74,27 +74,33 @@ export const uploadParticipant = async (
 
   const responseList: any[] = [];
   for (let i = 0; i < data.length; i++) {
-    const response = await _updateParticipantByEmail(space, {
-      ...data[i],
-      birthDate: data[i].birthDate
-        ? parse(data[i].birthDate, "yyyyMMdd", new Date())
-        : null,
-      joiningDate: data[i].joiningDate
-        ? parse(data[i].joiningDate, "yyyyMMdd", new Date())
-        : null,
-      startBaseIn: data[i].startBaseIn
-        ? parse(data[i].startBaseIn, "yyyyMMddHHmm", new Date())
-        : null,
-      landBaseIn: data[i].landBaseIn
-        ? parse(data[i].landBaseIn, "yyyyMMddHHmm", new Date())
-        : null,
-      startBaseOut: data[i].startBaseOut
-        ? parse(data[i].startBaseOut, "yyyyMMddHHmm", new Date())
-        : null,
-      landBaseOut: data[i].landBaseOut
-        ? parse(data[i].landBaseOut, "yyyyMMddHHmm", new Date())
-        : null,
+    const {
+      referenceId,
+      firstName,
+      lastName,
       eventId,
+      email,
+      telephone,
+      room,
+      birthDate,
+      joiningDate,
+      practice,
+      ...customFields
+    } = data[i];
+    const response = await _updateParticipantByEmail(space, {
+      referenceId,
+      firstName,
+      lastName,
+      eventId: _eventId,
+      email,
+      telephone,
+      room,
+      practice,
+      customFields,
+      birthDate: birthDate ? parse(birthDate, "yyyyMMdd", new Date()) : null,
+      joiningDate: joiningDate
+        ? parse(joiningDate, "yyyyMMdd", new Date())
+        : null,
     });
     responseList.push(response);
   }
