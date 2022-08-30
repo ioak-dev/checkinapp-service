@@ -82,6 +82,7 @@ export const registerIn = async (
         existingRecord[0]._id,
         {
           ...existingRecord[0]._doc,
+          from: new Date(),
           to: null,
         },
         { new: true, upsert: true }
@@ -127,6 +128,55 @@ export const registerOut = async (
   return response;
 };
 
+export const registerInReg = async (
+  space: string,
+  eventId: string,
+  participantId: string,
+  trackId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+  const existingRecord = await model.find({
+    eventId,
+    participantId,
+    trackId: trackId === "NA" ? null : trackId,
+  });
+  let response = null;
+  if (existingRecord.length > 0) {
+    if (trackId !== "NA") {
+      response = await model.findByIdAndUpdate(
+        existingRecord[0]._id,
+        {
+          ...existingRecord[0]._doc,
+        },
+        { new: true, upsert: true }
+      );
+    }
+  } else {
+    response = await model.create({
+      eventId,
+      participantId,
+      trackId: trackId === "NA" ? null : trackId,
+      register: new Date(),
+    });
+  }
+
+  return { status: "SUCCESS", response };
+};
+
+export const registerOutReg = async (
+  space: string,
+  eventId: string,
+  participantId: string,
+  trackId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+  return await model.remove({
+    eventId,
+    participantId,
+    trackId: trackId === "NA" ? null : trackId,
+  });
+};
+
 export const updateCheckin = async (
   space: string,
   data: any,
@@ -151,10 +201,20 @@ export const updateCheckin = async (
   return response;
 };
 
-export const getCheckin = async (space: string) => {
+export const getCheckinByEventId = async (space: string, eventId: string) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
 
-  return await model.find();
+  return await model.find({ eventId });
+};
+
+export const getCheckin = async (
+  space: string,
+  eventId: string,
+  participantId: string
+) => {
+  const model = getCollection(space, checkinCollection, checkinSchema);
+
+  return await model.find({ eventId, participantId });
 };
 
 export const getCheckinByEventAndTrack = async (

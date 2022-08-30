@@ -6,6 +6,7 @@ const checkinSchema = new Schema(
     trackId: { type: String },
     participantId: { type: String },
     eventId: { type: String },
+    register: { type: Date },
     from: { type: Date },
     to: { type: Date },
   },

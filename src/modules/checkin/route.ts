@@ -12,14 +12,20 @@ import {
   registerInAdmin,
   getCheckinByEvent,
   getCheckinByEventAndTrack,
+  registerInReg,
+  registerOutReg,
 } from "./service";
 
 const selfRealm = 100;
 
 module.exports = function (router: any) {
   router.get(
-    "/checkin/:space/:eventId/:participantId",
+    "/checkin/:space/:eventId/:participantId/track",
     asyncHandler(getAvailableTracks)
+  );
+  router.get(
+    "/checkin/:space/:eventId/:participantId",
+    asyncHandler(getCheckin)
   );
   router.post(
     "/checkin/:space/:eventId/:participantId/:trackId/in",
@@ -28,6 +34,14 @@ module.exports = function (router: any) {
   router.post(
     "/checkin/:space/:eventId/:participantId/:trackId/out",
     asyncHandler(registerOut)
+  );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/register/in",
+    asyncHandler(registerInReg)
+  );
+  router.post(
+    "/checkin/:space/:eventId/:participantId/:trackId/register/out",
+    asyncHandler(registerOutReg)
   );
   router.post(
     "/checkin/:space/:eventId/:participantId/:trackId/in/admin",
@@ -39,10 +53,6 @@ module.exports = function (router: any) {
   );
   router.put("/checkin/:space", authorizeApi, asyncHandler(updateCheckin));
   router.get("/checkin/:space", authorizeApi, asyncHandler(getCheckin));
-  router.get(
-    "/checkin/:space/:eventId/:participantId",
-    asyncHandler(getCheckin)
-  );
   router.get("/checkin/:space/event/:eventId", asyncHandler(getCheckinByEvent));
   router.get(
     "/checkin/:space/event/:eventId/track/:trackId",

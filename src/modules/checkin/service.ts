@@ -31,6 +31,18 @@ export const registerIn = async (req: any, res: any) => {
   res.end();
 };
 
+export const registerInReg = async (req: any, res: any) => {
+  const checkinList: any = await Helper.registerInReg(
+    req.params.space,
+    req.params.eventId,
+    req.params.participantId,
+    req.params.trackId
+  );
+  res.status(200);
+  res.send(checkinList);
+  res.end();
+};
+
 export const registerOutAdmin = async (req: any, res: any) => {
   const checkinList: any = await Helper.registerOut(
     req.params.space,
@@ -70,6 +82,18 @@ export const registerOut = async (req: any, res: any) => {
   res.end();
 };
 
+export const registerOutReg = async (req: any, res: any) => {
+  const checkinList: any = await Helper.registerOutReg(
+    req.params.space,
+    req.params.eventId,
+    req.params.participantId,
+    req.params.trackId
+  );
+  res.status(200);
+  res.send(checkinList);
+  res.end();
+};
+
 export const updateCheckin = async (req: any, res: any) => {
   const userId = req.user.user_id;
   const checkin: any = await Helper.updateCheckin(
@@ -83,15 +107,21 @@ export const updateCheckin = async (req: any, res: any) => {
 };
 
 export const getCheckin = async (req: any, res: any) => {
-  const userId = req.user.user_id;
-  const checkinList: any = await Helper.getCheckin(req.params.space);
+  const checkinList: any = await Helper.getCheckin(
+    req.params.space,
+    req.params.eventId,
+    req.params.participantId
+  );
   res.status(200);
   res.send(checkinList);
   res.end();
 };
 
 export const getCheckinByEvent = async (req: any, res: any) => {
-  const checkinList: any = await Helper.getCheckin(req.params.space);
+  const checkinList: any = await Helper.getCheckinByEventId(
+    req.params.space,
+    req.params.eventId
+  );
   res.status(200);
   res.send(checkinList);
   res.end();

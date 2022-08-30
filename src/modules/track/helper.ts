@@ -43,6 +43,7 @@ export const uploadTrack = async (
 
   const responseList: any[] = [];
   for (let i = 0; i < data.length; i++) {
+    console.log(data[i].to, data[i].name);
     const response = await updateTrack(space, {
       ...data[i],
       from: parse(data[i].from, "yyyyMMddHHmm", new Date()),
