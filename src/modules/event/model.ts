@@ -5,6 +5,9 @@ const eventSchema = new Schema(
   {
     name: { type: String },
     description: { type: String },
+    registrationFrom: { type: Date },
+    registrationTo: { type: Date },
+    eventFrom: { type: Date },
     notification: { type: String },
     code: { type: Number },
     media: { type: String },
