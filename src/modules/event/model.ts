@@ -8,6 +8,8 @@ const eventSchema = new Schema(
     registrationFrom: { type: Date },
     registrationTo: { type: Date },
     eventFrom: { type: Date },
+    venueTitle: { type: String },
+    venueDescription: { type: String },
     notification: { type: String },
     code: { type: Number },
     media: { type: String },
