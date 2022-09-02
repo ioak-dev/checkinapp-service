@@ -5,6 +5,7 @@ const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
 import { parse } from "date-fns";
+import { eventCollection, eventSchema } from "../event/model";
 
 export const updateParticipant = async (
   space: string,
@@ -72,6 +73,20 @@ export const uploadParticipant = async (
     return null;
   }
 
+  const eventModel = getCollection(space, eventCollection, eventSchema);
+
+  const event = await eventModel.findOne({ _id: _eventId });
+
+  if (!event) {
+    return null;
+  }
+
+  const customFieldDefList = JSON.parse(event.customFields);
+  const customFieldDefMap: any = {};
+  for (let i = 0; i < customFieldDefList.length; i++) {
+    customFieldDefMap[customFieldDefList[i].name] = customFieldDefList[i];
+  }
+
   const responseList: any[] = [];
   for (let i = 0; i < data.length; i++) {
     const {
@@ -85,8 +100,12 @@ export const uploadParticipant = async (
       birthDate,
       joiningDate,
       practice,
-      ...customFields
+      ..._customFields
     } = data[i];
+    const customFields = _formatCustomFieldsValue(
+      customFieldDefMap,
+      _customFields
+    );
     const response = await _updateParticipantByEmail(space, {
       referenceId,
       firstName,
@@ -106,6 +125,38 @@ export const uploadParticipant = async (
   }
 
   return responseList;
+};
+
+const _formatCustomFieldsValue = (customFieldDef: any, customFields: any) => {
+  if (!customFields) {
+    return {};
+  }
+  const _customFields: any = {};
+  Object.keys(customFieldDef).forEach((item) => {
+    const customFieldDefItem = customFieldDef[item];
+    const customFieldValue = customFields[item];
+    if (!customFieldValue) {
+      _customFields[item] = null;
+    } else {
+      switch (customFieldDefItem.datatype) {
+        case "date":
+          _customFields[item] = parse(customFieldValue, "yyyyMMdd", new Date());
+          break;
+        case "datetime":
+          _customFields[item] = parse(
+            customFieldValue,
+            "yyyyMMddhhmm",
+            new Date()
+          );
+          break;
+
+        default:
+          _customFields[item] = customFieldValue;
+          break;
+      }
+    }
+  });
+  return _customFields;
 };
 
 export const uploadParticipantGroup = async (
