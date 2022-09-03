@@ -52,6 +52,7 @@ const _updateParticipantByEmail = async (space: string, data: any) => {
   response = await model.findOneAndUpdate(
     {
       email: data.email,
+      eventId: data.eventId,
     },
     {
       ...data,
@@ -145,7 +146,7 @@ const _formatCustomFieldsValue = (customFieldDef: any, customFields: any) => {
         case "datetime":
           _customFields[item] = parse(
             customFieldValue,
-            "yyyyMMddhhmm",
+            "yyyyMMddHHmm",
             new Date()
           );
           break;
