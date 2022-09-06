@@ -1,11 +1,12 @@
 const axios = require("axios");
 const ONEAUTH_API = process.env.ONEAUTH_API || "http://localhost:4010/api";
+import { parse } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
+import { eventCollection, eventSchema } from "../event/model";
 import { participantCollection, participantSchema } from "./model";
 const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
-import { parse } from "date-fns";
-import { eventCollection, eventSchema } from "../event/model";
 
 export const updateParticipant = async (
   space: string,
@@ -107,6 +108,12 @@ export const uploadParticipant = async (
       customFieldDefMap,
       _customFields
     );
+    const _birthDate = birthDate
+      ? zonedTimeToUtc(
+          parse(birthDate, "yyyyMMdd", new Date()),
+          "America/New_York"
+        )
+      : null;
     const response = await _updateParticipantByEmail(space, {
       referenceId,
       firstName,
@@ -117,7 +124,7 @@ export const uploadParticipant = async (
       room,
       practice,
       customFields,
-      birthDate: birthDate ? parse(birthDate, "yyyyMMdd", new Date()) : null,
+      birthDate: _birthDate,
       joiningDate: joiningDate
         ? parse(joiningDate, "yyyyMMdd", new Date())
         : null,
@@ -141,13 +148,18 @@ const _formatCustomFieldsValue = (customFieldDef: any, customFields: any) => {
     } else {
       switch (customFieldDefItem.datatype) {
         case "date":
-          _customFields[item] = parse(customFieldValue, "yyyyMMdd", new Date());
+          const dateValue = parse(customFieldValue, "yyyyMMdd", new Date());
+          _customFields[item] = zonedTimeToUtc(dateValue, "America/New_York");
           break;
         case "datetime":
-          _customFields[item] = parse(
+          const datetimeValue = parse(
             customFieldValue,
             "yyyyMMddHHmm",
             new Date()
+          );
+          _customFields[item] = zonedTimeToUtc(
+            datetimeValue,
+            "America/New_York"
           );
           break;
 
@@ -211,11 +223,12 @@ export const getParticipantById = async (space: string, id: string) => {
 
 export const getParticipantByReferenceId = async (
   space: string,
+  eventId: string,
   referenceId: string
 ) => {
   const model = getCollection(space, participantCollection, participantSchema);
 
-  const response = await model.find({ referenceId });
+  const response = await model.find({ referenceId, eventId });
   if (response.length > 0) {
     return response[0];
   }

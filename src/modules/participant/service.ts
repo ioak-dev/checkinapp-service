@@ -78,6 +78,7 @@ export const getParticipantByReferenceId = async (req: any, res: any) => {
   // const userId = req.user.user_id;
   const participantList: any = await Helper.getParticipantByReferenceId(
     req.params.space,
+    req.params.eventId,
     req.params.referenceId
   );
   res.status(200);

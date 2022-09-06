@@ -39,7 +39,7 @@ module.exports = function (router: any) {
   router.get("/participant/:space", asyncHandler(getParticipant));
   router.get("/participant/:space/:id", asyncHandler(getParticipantById));
   router.get(
-    "/participant/:space/reference/:referenceId",
+    "/participant/:space/event/:eventId/reference/:referenceId",
     asyncHandler(getParticipantByReferenceId)
   );
   router.get(

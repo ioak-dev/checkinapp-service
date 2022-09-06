@@ -5,6 +5,7 @@ const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
 import { parse } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 export const updateTrack = async (
   space: string,
@@ -18,12 +19,16 @@ export const updateTrack = async (
       data._id,
       {
         ...data,
+        from: zonedTimeToUtc(data.from, "America/New_York"),
+        to: zonedTimeToUtc(data.to, "America/New_York"),
       },
       { new: true, upsert: true }
     );
   } else {
     response = await model.create({
       ...data,
+      from: zonedTimeToUtc(data.from, "America/New_York"),
+      to: zonedTimeToUtc(data.to, "America/New_York"),
     });
   }
 
@@ -43,7 +48,6 @@ export const uploadTrack = async (
 
   const responseList: any[] = [];
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i].to, data[i].name);
     const response = await updateTrack(space, {
       ...data[i],
       from: parse(data[i].from, "yyyyMMddHHmm", new Date()),
