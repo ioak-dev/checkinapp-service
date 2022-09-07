@@ -18,6 +18,7 @@ const eventSchema = new Schema(
     home: { type: String },
     adminKey: { type: String },
     customFields: { type: Object },
+    dresscode: { type: String },
   },
   { timestamps: true }
 );

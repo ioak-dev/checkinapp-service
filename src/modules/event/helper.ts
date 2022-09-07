@@ -4,6 +4,7 @@ import { eventCollection, eventSchema } from "./model";
 const { getCollection } = require("../../lib/dbutils");
 import { nextval } from "../sequence/service";
 import * as NoteHelper from "../note/helper";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 export const updateEvent = async (
   space: string,
@@ -17,6 +18,15 @@ export const updateEvent = async (
       data._id,
       {
         ...data,
+        // registrationTo: data.registrationTo
+        //   ? zonedTimeToUtc(new Date(data.registrationTo), "America/New_York")
+        //   : null,
+        // registrationFrom: data.registrationFrom
+        //   ? zonedTimeToUtc(new Date(data.registrationFrom), "America/New_York")
+        //   : null,
+        // eventFrom: data.eventFrom
+        //   ? zonedTimeToUtc(new Date(data.eventFrom), "America/New_York")
+        //   : null,
       },
       { new: true, upsert: true }
     );
