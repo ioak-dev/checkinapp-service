@@ -6,6 +6,7 @@ import { nextval } from "../sequence/service";
 import * as TrackHelper from "../track/helper";
 import * as EventHelper from "../event/helper";
 import { isEmptyOrSpaces } from "../../lib/Utils";
+import { trackCollection, trackSchema } from "../track/model";
 
 export const getAvailableTracks = async (
   space: string,
@@ -135,6 +136,21 @@ export const registerInReg = async (
   trackId: string
 ) => {
   const model = getCollection(space, checkinCollection, checkinSchema);
+  const trackModel = getCollection(space, trackCollection, trackSchema);
+  const track = await trackModel.find({ _id: trackId, eventId });
+  if (track.length === 1 && !isEmptyOrSpaces(track[0].exclusiveGroup)) {
+    const exclusiveTracks = await trackModel.find({
+      exclusiveGroup: track[0].exclusiveGroup,
+      eventId,
+    });
+    const exclusiveTrackIds: string[] = [];
+    exclusiveTracks.forEach((item: any) => exclusiveTrackIds.push(item._id));
+    await model.remove({
+      eventId,
+      participantId,
+      trackId: { $in: exclusiveTrackIds },
+    });
+  }
   const existingRecord = await model.find({
     eventId,
     participantId,
