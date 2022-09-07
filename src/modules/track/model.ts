@@ -13,6 +13,7 @@ const trackSchema = new Schema(
     group: { type: String },
     location: { type: String },
     registration: { type: String }, // required | optional | na
+    exclusiveGroup: { type: String },
   },
   { timestamps: true }
 );
