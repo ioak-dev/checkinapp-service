@@ -15,6 +15,8 @@ const eventSchema = new Schema(
     media: { type: String },
     support: { type: String },
     group: { type: String },
+    registerDeclaration: { type: String },
+    checkinDeclaration: { type: String },
     home: { type: String },
     adminKey: { type: String },
     customFields: { type: Object },
