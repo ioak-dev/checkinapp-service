@@ -11,7 +11,7 @@ import {
   uploadParticipantGroup,
   deleteAllParticipant,
   getParticipantByEventId,
-  updateParticipantRoom,
+  updateParticipantDeclaration,
 } from "./service";
 
 const selfRealm = 100;
@@ -28,8 +28,8 @@ module.exports = function (router: any) {
     asyncHandler(uploadParticipant)
   );
   router.post(
-    "/participant/:space/room/:participantId/:room",
-    asyncHandler(updateParticipantRoom)
+    "/participant/:space/declaration/:eventId/:participantId/:declaration/:value",
+    asyncHandler(updateParticipantDeclaration)
   );
   router.post(
     "/participant/:space/:eventId/upload/group",

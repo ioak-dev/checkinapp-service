@@ -15,6 +15,8 @@ const participantSchema = new Schema(
     joiningDate: { type: Date },
     practice: { type: String },
     customFields: { type: Object },
+    firstDeclaration: { type: Boolean },
+    secondDeclaration: { type: Boolean },
   },
   { timestamps: true }
 );

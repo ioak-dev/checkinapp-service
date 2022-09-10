@@ -32,18 +32,25 @@ export const updateParticipant = async (
   return response;
 };
 
-export const updateParticipantRoom = async (
+export const updateParticipantDeclaration = async (
   space: string,
+  eventId: string,
   participantId: string,
-  room: string
+  declaration: string,
+  value: string
 ) => {
   const model = getCollection(space, participantCollection, participantSchema);
-  return await model.findByIdAndUpdate(
-    participantId,
+  const _toUpdate = {
+    [declaration === "first" ? "firstDeclaration" : "secondDeclaration"]:
+      value === "Y",
+  };
+  return await model.findOneAndUpdate(
+    { eventId, _id: participantId },
+    _toUpdate,
     {
-      room,
-    },
-    { new: true, upsert: true }
+      new: true,
+      upsert: true,
+    }
   );
 };
 
@@ -197,6 +204,7 @@ export const uploadParticipantGroup = async (
   for (let i = 0; i < _emailList.length; i++) {
     const response = await _updateParticipantByEmail(space, {
       email: _emailList[i],
+      eventId,
       groups: _groupMap[_emailList[i]],
     });
     responseList.push(response);

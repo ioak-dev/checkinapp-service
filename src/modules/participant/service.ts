@@ -19,11 +19,13 @@ export const updateParticipant = async (req: any, res: any) => {
   res.end();
 };
 
-export const updateParticipantRoom = async (req: any, res: any) => {
-  const participant: any = await Helper.updateParticipantRoom(
+export const updateParticipantDeclaration = async (req: any, res: any) => {
+  const participant: any = await Helper.updateParticipantDeclaration(
     req.params.space,
+    req.params.eventId,
     req.params.participantId,
-    req.params.room
+    req.params.declaration,
+    req.params.value
   );
   res.status(200);
   res.send(participant);
