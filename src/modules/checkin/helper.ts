@@ -78,17 +78,17 @@ export const registerIn = async (
   });
   let response = null;
   if (existingRecord.length > 0) {
-    if (trackId !== "NA") {
-      response = await model.findByIdAndUpdate(
-        existingRecord[0]._id,
-        {
-          ...existingRecord[0]._doc,
-          from: new Date(),
-          to: null,
-        },
-        { new: true, upsert: true }
-      );
-    }
+    // if (trackId !== "NA") {
+    response = await model.findByIdAndUpdate(
+      existingRecord[0]._id,
+      {
+        ...existingRecord[0]._doc,
+        from: new Date(),
+        to: null,
+      },
+      { new: true, upsert: true }
+    );
+    // }
   } else {
     response = await model.create({
       eventId,
