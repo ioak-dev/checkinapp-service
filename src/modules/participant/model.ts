@@ -9,6 +9,8 @@ const participantSchema = new Schema(
     eventId: { type: String },
     email: { type: String },
     telephone: { type: String },
+    emergencyContactName: { type: String },
+    emergencyContactTelephone: { type: String },
     room: { type: String },
     groups: { type: Array },
     birthDate: { type: Date },

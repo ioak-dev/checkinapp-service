@@ -109,6 +109,8 @@ export const uploadParticipant = async (
       birthDate,
       joiningDate,
       practice,
+      emergencyContactName,
+      emergencyContactTelephone,
       ..._customFields
     } = data[i];
     const customFields = _formatCustomFieldsValue(
@@ -130,6 +132,8 @@ export const uploadParticipant = async (
       telephone,
       room,
       practice,
+      emergencyContactName,
+      emergencyContactTelephone,
       customFields,
       birthDate: _birthDate,
       joiningDate: joiningDate
