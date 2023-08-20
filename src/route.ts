@@ -20,5 +20,7 @@ require("./modules/user/invite/route")(router);
 require("./modules/company/route")(router);
 require("./modules/note/tag/route")(router);
 require("./modules/notelink/route")(router);
+require("./modules/roommate/people/route")(router);
+require("./modules/roommate/request/route")(router);
 
 module.exports = router;

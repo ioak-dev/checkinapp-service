@@ -49,7 +49,6 @@ export const decodeAccessToken = async (space: number, accessToken: string) => {
 const autoAcceptInvites = async (user: any) => {
   const model = getGlobalCollection(userInviteCollection, userInviteSchema);
   const pendingInviteList = await model.find({ email: user.email });
-  console.log(pendingInviteList);
   for (let i = 0; i < pendingInviteList.length; i++) {
     const res = await model.findByIdAndUpdate(
       pendingInviteList[i]._id,
@@ -60,12 +59,6 @@ const autoAcceptInvites = async (user: any) => {
       },
       { new: true, upsert: true }
     );
-
-    console.log({
-      ...pendingInviteList[i],
-      userId: user._id,
-      accepted: true,
-    });
   }
 };
 

@@ -61,3 +61,22 @@ export const authorizeApi = async (req: any, res: any, next: any) => {
     return res.sendStatus(401);
   }
 };
+
+export const authorizeLocalApi = async (req: any, res: any, next: any) => {
+  try {
+    const token = req.headers["authorization"];
+    if (!token) {
+      return res.sendStatus(401);
+    }
+    const localData = await decodeAppToken(token);
+    if (!localData.outcome) {
+      return res.sendStatus(401);
+    }
+    const claims: any = localData.claims;
+    req.user = {...claims};
+    next();
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(401);
+  }
+};
