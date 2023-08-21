@@ -81,14 +81,14 @@ export const approveRequest = async (
     {}
   );
 
-  // await model.deleteMany({
-  //   $or: [
-  //     { $and: [{ from: request.from }, { status: 'requested' }] },
-  //     { $and: [{ from: request.to }, { status: 'requested' }] },
-  //     { $and: [{ to: request.from }, { status: 'requested' }] },
-  //     { $and: [{ to: request.to }, { status: 'requested' }] }
-  //   ]
-  // })
+  await model.deleteMany({
+    $or: [
+      { $and: [{ from: request.from }, { status: 'requested' }] },
+      { $and: [{ from: request.to }, { status: 'requested' }] },
+      { $and: [{ to: request.from }, { status: 'requested' }] },
+      { $and: [{ to: request.to }, { status: 'requested' }] }
+    ]
+  })
 
   return response;
 };
