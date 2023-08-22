@@ -8,6 +8,7 @@ const peopleSchema = new Schema(
     lastName: { type: String },
     email: { type: String },
     password: { type: String },
+    gender: { type: String },
     level: {type: String}
   },
   { timestamps: true }
