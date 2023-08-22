@@ -56,6 +56,16 @@ const _updatePeopleByEmail = async (data: any) => {
 };
 
 export const getPeople = async (userId: string) => {
+  const model = getGlobalCollection(peopleCollection, peopleSchema);
+
+  const userArray = await model.find({ _id: userId });
+  if (userArray.length === 0) {
+    return { statue: 401 };
+  }
+
+  const user = userArray[0];
+  const gender = user.gender;
+
   const requests = await RequestHelper.getAllRequest();
   let blockedUsers: string[] = [userId];
   const relatedUsers: string[] = [];
@@ -78,11 +88,8 @@ export const getPeople = async (userId: string) => {
     }
   })
   blockedUsers = blockedUsers.filter((item: any) => !relatedUsers.includes(item));
-  console.log(blockedUsers);
-  const model = getGlobalCollection(peopleCollection, peopleSchema);
 
-  const allUsers = await model.find({});
-  const availableUsers = await model.find({ _id: { $nin: blockedUsers } });
+  const availableUsers = await model.find({ $and: [{ _id: { $nin: blockedUsers } }, { gender }] });
 
   return availableUsers.map((item: any) => {
     return {
