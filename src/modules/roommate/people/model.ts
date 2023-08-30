@@ -9,7 +9,7 @@ const peopleSchema = new Schema(
     email: { type: String },
     password: { type: String },
     gender: { type: String },
-    level: {type: String}
+    phone: {type: String}
   },
   { timestamps: true }
 );

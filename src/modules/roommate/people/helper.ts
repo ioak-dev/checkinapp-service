@@ -96,6 +96,7 @@ export const getPeople = async (userId: string) => {
       email: item.email,
       firstName: item.firstName,
       lastName: item.lastName,
+      phone: item.phone,
       _id: item._id
     }
   })
@@ -177,12 +178,14 @@ export const signin = async (payload: { email: string, password: string }) => {
     _id: user._id,
     user_id: user._id,
     firstName: user.firstName,
-    lastName: user.lastName
+    lastName: user.lastName,
+    phone: user.phone
   });
 
   return {
     accessToken: token, email: user.email,
-    _id: user._id, firstName: user.firstName, lastName: user.lastName
+    _id: user._id, firstName: user.firstName, lastName: user.lastName,
+    phone: user.phone
   };
 }
 
