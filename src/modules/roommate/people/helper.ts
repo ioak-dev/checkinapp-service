@@ -243,6 +243,15 @@ export const sendPassword = async (data: string[]) => {
   for (let i = 0; i < data.length; i++) {
     const person = await model.find({ email: data[i].toLowerCase() });
     if (person.length === 1) {
+      const updatedPassword = _getPassword();
+      const updatedModel = await model.findByIdAndUpdate(
+        person[0]._id,
+        {
+          ...data,
+          password: updatedPassword
+        },
+        { new: true, upsert: true }
+      );
       const emailBody = convertMessage(emailBodyTemplate.toString(), [
         { name: "TEMPLATE_PASSWORD", value: person[0].password },
         { name: "TEMPLATE_USER", value: person[0].firstName },
