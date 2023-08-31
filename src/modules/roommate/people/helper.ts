@@ -253,7 +253,7 @@ export const sendPassword = async (data: string[]) => {
         { new: true, upsert: true }
       );
       const emailBody = convertMessage(emailBodyTemplate.toString(), [
-        { name: "TEMPLATE_PASSWORD", value: person[0].password },
+        { name: "TEMPLATE_PASSWORD", value: updatedPassword },
         { name: "TEMPLATE_USER", value: person[0].firstName },
       ]);
       sendMail({
