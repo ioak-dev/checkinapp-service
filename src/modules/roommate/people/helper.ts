@@ -43,6 +43,7 @@ const _updatePeopleByEmail = async (data: any) => {
   const _existing = await model.find({ email: _data.email });
   if (_existing.length === 0) {
     _data.password = _getPassword();
+    // _data.password = data.firstName.toLowerCase();
   }
   let response = null;
   response = await model.findOneAndUpdate(
@@ -89,7 +90,7 @@ export const getPeople = async (userId: string) => {
   })
   blockedUsers = blockedUsers.filter((item: any) => !relatedUsers.includes(item));
 
-  const availableUsers = await model.find({ $and: [{ _id: { $nin: blockedUsers } }, { gender }] });
+  const availableUsers = await model.find({ $and: [{ _id: { $nin: blockedUsers } }, { gender }] }).sort({firstName: "asc"});
 
   return availableUsers.map((item: any) => {
     return {
