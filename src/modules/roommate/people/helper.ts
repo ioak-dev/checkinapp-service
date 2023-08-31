@@ -131,6 +131,12 @@ export const getPeopleById = async (space: string, id: string) => {
   return null;
 };
 
+export const getAllPeople = async () => {
+  const model = getGlobalCollection(peopleCollection, peopleSchema);
+
+  return await model.find();
+};
+
 export const getPeopleByReferenceId = async (
   space: string,
   eventId: string,

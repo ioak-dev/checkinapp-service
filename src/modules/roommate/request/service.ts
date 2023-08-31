@@ -112,3 +112,10 @@ export const deleteAllRequest = async (req: any, res: any) => {
   res.send(outcome);
   res.end();
 };
+
+export const getReport = async (req: any, res: any) => {
+  const response: any = await Helper.getReport();
+  res.status(200);
+  res.send(response);
+  res.end();
+};

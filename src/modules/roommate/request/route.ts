@@ -6,7 +6,8 @@ import {
   deleteRequest,
   revokeRequest,
   approveRequest,
-  rejectRequest
+  rejectRequest,
+  getReport
 } from "./service";
 
 const selfRealm = 100;
@@ -33,6 +34,7 @@ module.exports = function (router: any) {
     asyncHandler(rejectRequest)
   );
   router.get("/roommate/request", authorizeLocalApi, asyncHandler(getRequest));
+  router.get("/roommate/report", asyncHandler(getReport));
   router.delete(
     "/roommate/request/:id",
     authorizeApi,

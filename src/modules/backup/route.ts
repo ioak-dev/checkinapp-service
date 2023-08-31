@@ -5,6 +5,6 @@ import { backup, restore } from "./service";
 const selfRealm = 100;
 
 module.exports = function (router: any) {
-  router.get("/backup/:space", asyncHandler(backup));
-  router.post("/restore/:space", asyncHandler(restore));
+  router.get("/roommate/backup", asyncHandler(backup));
+  router.post("/roommate/restore", asyncHandler(restore));
 };

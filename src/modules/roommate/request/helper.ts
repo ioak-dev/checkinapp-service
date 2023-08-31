@@ -3,6 +3,7 @@ const ONEAUTH_API = process.env.ONEAUTH_API || "http://localhost:4010/api";
 import { parse } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 import { roommateRequestCollection, roommateRequestSchema } from "./model";
+import * as PeopleHelper from "../people/helper";
 import { getGlobalCollection } from "../../../lib/dbutils";
 
 export const createRequest = async (
@@ -178,3 +179,33 @@ export const deleteAllRequest = async (eventId: string) => {
 
   return await model.remove({ eventId });
 };
+
+export const getReport = async () => {
+  const model = getGlobalCollection(roommateRequestCollection, roommateRequestSchema);
+  const requests = await model.find();
+  const people = await PeopleHelper.getAllPeople();
+  const peopleMap: any = {};
+  people.forEach((item: any) => {
+    peopleMap[item._id] = item;
+  });
+
+  const report: any[] = [];
+  requests.forEach((item: any) => {
+    const from = peopleMap[item.from];
+    const to = peopleMap[item.to];
+    const _reportItem = {
+      "First name (1)": from?.firstName,
+      "Last name (1)": from?.lastName,
+      "Email (1)": from?.email,
+      "Phone (1)": from?.phone,
+      "First name (2)": to?.firstName,
+      "Last name (2)": to?.lastName,
+      "Email (2)": to?.email,
+      "Phone (2)": to?.phone,
+      "Status": item.status
+    };
+    report.push(_reportItem);
+  })
+
+  return report;
+}
