@@ -256,6 +256,7 @@ export const sendPassword = async (data: string[]) => {
         { name: "TEMPLATE_PASSWORD", value: updatedPassword },
         { name: "TEMPLATE_USER", value: person[0].firstName },
       ]);
+      await delay(5000);
       sendMail({
         to: data[i],
         subject: "Win annual meet choose roommate app password",
@@ -263,4 +264,8 @@ export const sendPassword = async (data: string[]) => {
       });
     }
   }
+}
+
+const delay = (delayInms: number) => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
 }

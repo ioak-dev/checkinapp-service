@@ -20,7 +20,7 @@ const smtpPassword = process.env.SMTP_PASSWORD || "!J$ee8rt9pK&";
 const transporterConfig = {
   host: smtpHost,
   port: smtpPort,
-  secure: true, // true for 465, false for other ports
+  secure: false, // true for 465, false for other ports
   auth: {
     user: smtpUser,
     pass: smtpPassword,
@@ -81,6 +81,7 @@ const _sendMail = (
   transporter.sendMail({ ...message, from }, (err, info) => {
     console.log(err);
   });
+  console.log("--sending email end");
 };
 
 export const convertMessage = (
