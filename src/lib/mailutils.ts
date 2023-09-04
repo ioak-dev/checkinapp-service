@@ -1,13 +1,21 @@
 import nodemailer, { createTransport, Transporter } from "nodemailer";
 
-const smtpHost = process.env.SMTP_HOST || "smtp.zoho.in";
-const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 465;
-const smtpUser = process.env.SMTP_USER || "support@ioak.org";
+// const smtpHost = process.env.SMTP_HOST || "smtp.zoho.in";
+// const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 465;
+// const smtpUser = process.env.SMTP_USER || "support@ioak.org";
+// const smtpDefaultSenderEmail =
+//   process.env.SMTP_DEFAULT_SENDER_EMAIL || "support@ioak.org";
+// const smtpDefaultSenderName =
+//   process.env.SMTP_DEFAULT_SENDER_NAME || "Ioak Support";
+// const smtpPassword = process.env.SMTP_PASSWORD || "qNWHvTRpJFWs";
+const smtpHost = process.env.SMTP_HOST || "smtp.office365.com";
+const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587;
+const smtpUser = process.env.SMTP_USER || "hibob-scheduler@westernacher.com";
 const smtpDefaultSenderEmail =
-  process.env.SMTP_DEFAULT_SENDER_EMAIL || "support@ioak.org";
+  process.env.SMTP_DEFAULT_SENDER_EMAIL || "hibob-scheduler@westernacher.com";
 const smtpDefaultSenderName =
-  process.env.SMTP_DEFAULT_SENDER_NAME || "Ioak Support";
-const smtpPassword = process.env.SMTP_PASSWORD || "qNWHvTRpJFWs";
+  process.env.SMTP_DEFAULT_SENDER_NAME || "WIN IT Support";
+const smtpPassword = process.env.SMTP_PASSWORD || "!J$ee8rt9pK&";
 
 const transporterConfig = {
   host: smtpHost,
