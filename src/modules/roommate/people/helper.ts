@@ -168,7 +168,7 @@ export const deleteAllPeople = async (space: string, eventId: string) => {
 export const signin = async (payload: { email: string, password: string }) => {
   const model = getGlobalCollection(peopleCollection, peopleSchema);
 
-  const response = await model.find({ email: payload.email });
+  const response = await model.find({ email: payload.email.toLowerCase() });
 
   if (response.length === 0) {
     return { status: 404 };
