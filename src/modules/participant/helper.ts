@@ -128,7 +128,7 @@ export const uploadParticipant = async (
       firstName,
       lastName,
       eventId: _eventId,
-      email,
+      email: email.toLowerCase(),
       telephone,
       room,
       practice,
