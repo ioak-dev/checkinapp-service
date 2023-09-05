@@ -48,10 +48,15 @@ export const uploadTrack = async (
 
   const responseList: any[] = [];
   for (let i = 0; i < data.length; i++) {
+    const from = parse(data[i].from, "yyyyMMddHHmm", new Date());
+    const to = parse(data[i].to, "yyyyMMddHHmm", new Date());
+    const hoursToAdd = 14 * 60 * 60 * 1000;
+    from.setTime(from.getTime() + hoursToAdd);
+    to.setTime(to.getTime() + hoursToAdd);
     const response = await updateTrack(space, {
       ...data[i],
-      from: parse(data[i].from, "yyyyMMddHHmm", new Date()),
-      to: parse(data[i].to, "yyyyMMddHHmm", new Date()),
+      from,
+      to,
       eventId,
     });
     responseList.push(response);
